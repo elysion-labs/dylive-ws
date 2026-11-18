@@ -1,0 +1,95 @@
+{
+  "source": "Electron 45.3.4, authenticated Douyin Web live chat",
+  "date": "2026-11-18",
+  "method": "WebcastGiftMessage",
+  "fixtures": [
+    {
+      "file": "fans-club-badge.bin",
+      "line": 1,
+      "purpose": "粉丝团礼物，礼物目录标记为粉丝团。",
+      "expected": {
+        "giftId": "685",
+        "name": "粉丝团灯牌",
+        "diamondCount": "1",
+        "giftType": "4",
+        "categoryId": "753",
+        "catalogCombo": false,
+        "fansClubGift": true,
+        "groupId": "1",
+        "groupCount": "1",
+        "repeatCount": "1",
+        "comboCount": "1",
+        "repeatEnd": null,
+        "totalCount": "1",
+        "recipientPresent": false
+      },
+      "sha256": "050e3bec9525d78d5abf403a23cdacee49214addab26b54830d83e810980c460"
+    },
+    {
+      "file": "combo-start.bin",
+      "line": 2,
+      "purpose": "同一连击组的首次推送，repeat_end 缺省。",
+      "expected": {
+        "giftId": "463",
+        "name": "小心心",
+        "diamondCount": "1",
+        "giftType": "1",
+        "categoryId": "1653",
+        "catalogCombo": true,
+        "fansClubGift": false,
+        "groupId": "2",
+        "groupCount": "1",
+        "repeatCount": "1",
+        "comboCount": "1",
+        "repeatEnd": null,
+        "totalCount": "1",
+        "recipientPresent": false
+      },
+      "sha256": "8fcce6d27970002fae849c280fc39ff11800bdfc85bf1875a629930efa375fc0"
+    },
+    {
+      "file": "combo-end.bin",
+      "line": 3,
+      "purpose": "上一个连击组的结束推送，repeat_end 为 1，计数保持为 1。",
+      "expected": {
+        "giftId": "463",
+        "name": "小心心",
+        "diamondCount": "1",
+        "giftType": "1",
+        "categoryId": "1653",
+        "catalogCombo": true,
+        "fansClubGift": false,
+        "groupId": "2",
+        "groupCount": "1",
+        "repeatCount": "1",
+        "comboCount": "1",
+        "repeatEnd": "1",
+        "totalCount": "1",
+        "recipientPresent": false
+      },
+      "sha256": "0f9fca9fb0236261035832281a36c72ecfd34cf57464cfbc63cf71e3993ab8f4"
+    },
+    {
+      "file": "directed-gift.bin",
+      "line": 5,
+      "purpose": "团播里有指定接收人的礼物，保留接收人字段存在性和 99 钻目录值。",
+      "expected": {
+        "giftId": "3447",
+        "name": "亲吻",
+        "diamondCount": "99",
+        "giftType": "4",
+        "categoryId": "641",
+        "catalogCombo": false,
+        "fansClubGift": false,
+        "groupId": "3",
+        "groupCount": "1",
+        "repeatCount": "1",
+        "comboCount": "1",
+        "repeatEnd": null,
+        "totalCount": "1",
+        "recipientPresent": true
+      },
+      "sha256": "3b5cdb4a93b1b2783fc8a7729a84501363252157ebfed2ab198b111e7ec88bff"
+    }
+  ]
+}
