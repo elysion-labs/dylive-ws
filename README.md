@@ -7,7 +7,8 @@
   <a href="#events">支持事件</a> ·
   <a href="#snapshots">真实数据回归</a> ·
   <a href="./docs/client.md">客户端文档</a> ·
-  <a href="./docs/api.md">API 文档</a>
+  <a href="./docs/api.md">API 文档</a> ·
+  <a href="./docs/collection.md">采集文档</a>
 </p>
 
 `@elysionjs/dylive-ws` 读取抖音直播消息，保留原始 Protobuf 载荷，并将文字弹幕转换为类型化事件。WebSocket 直连和 Electron 客户端共用事件解析、诊断和生命周期。
@@ -27,6 +28,8 @@
 ```sh
 bun install --frozen-lockfile
 vp run build
+bun run example:parse
+bun run example:live --anonymous 708764876300
 ```
 
 把直播间网址末尾的数字作为 `roomId`，即可从 Bun 或 Node.js 直连：
@@ -43,6 +46,8 @@ await client.start();
 ```
 
 如果已经在 Electron 中打开直播页，使用 `@elysionjs/dylive-ws/electron` 的 `createElectronClient()`。完整示例、Cookie 与状态语义见 [客户端文档](./docs/client.md)。
+
+运行 `bunx electron examples/electron.mjs` 可在独立窗口登录后选择直播间。运行 `vp run capture:anonymous 708764876300` 可将原始业务消息写入本地 JSONL。 [采集配置与回放](./docs/collection.md)
 
 <a id="events"></a>
 

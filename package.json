@@ -41,6 +41,8 @@
   "scripts": {
     "build": "vp pack",
     "check": "vp check",
+    "example:live": "bun examples/live.ts",
+    "example:parse": "bun examples/parse.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
   },

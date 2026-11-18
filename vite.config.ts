@@ -2,6 +2,18 @@ import { byc } from '@byc/vp-config';
 
 export default byc(
   {
+    run: {
+      tasks: {
+        capture: {
+          command: 'bun scripts/capture.ts',
+          cache: false,
+        },
+        'capture:anonymous': {
+          command: 'bun scripts/capture.ts --anonymous',
+          cache: false,
+        },
+      },
+    },
     pack: {
       entry: {
         index: 'src/index.ts',
