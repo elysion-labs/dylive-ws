@@ -1,0 +1,20 @@
+{
+  "ChatMessage": {
+    "status": "parsed",
+    "event": {
+      "type": "message",
+      "content": "最后应该给他冻住",
+      "user": {
+        "name": "<REDACTED>",
+        "id": "<REDACTED>"
+      },
+      "roomId": "example-room"
+    }
+  },
+  "EmojiChatMessage": {
+    "status": "unknown"
+  },
+  "RoomStatsMessage": {
+    "status": "unknown"
+  }
+}

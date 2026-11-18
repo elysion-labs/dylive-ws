@@ -1,0 +1,75 @@
+{
+  "name": "@elysionjs/dylive-ws",
+  "version": "0.0.0",
+  "description": "Read-only Douyin live chat decoding and Electron CDP capture.",
+  "homepage": "https://github.com/elysion-labs/dylive-ws#readme",
+  "bugs": {
+    "url": "https://github.com/elysion-labs/dylive-ws/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elysion-labs/dylive-ws.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./protocol": {
+      "source": "./src/protocol.ts",
+      "types": "./dist/protocol.d.mts",
+      "default": "./dist/protocol.mjs"
+    },
+    "./parser": {
+      "source": "./src/parser.ts",
+      "types": "./dist/parser.d.mts",
+      "default": "./dist/parser.mjs"
+    },
+    "./electron": {
+      "source": "./src/electron.ts",
+      "types": "./dist/electron.d.mts",
+      "default": "./dist/electron.mjs"
+    }
+  },
+  "scripts": {
+    "build": "vp pack",
+    "check": "vp check",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ws": "^8.23.0"
+  },
+  "devDependencies": {
+    "@byc/vp-config": "^0.1.0",
+    "@stylistic/eslint-plugin": "^6.0.0",
+    "@types/bun": "^1.4.4",
+    "@types/ws": "^8.18.1",
+    "typescript": "^7.0.2",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0",
+    "vite-plus": "1.6.0"
+  },
+  "peerDependencies": {
+    "electron": "*"
+  },
+  "peerDependenciesMeta": {
+    "electron": {
+      "optional": true
+    }
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0"
+  },
+  "engines": {
+    "bun": ">=1.4.4",
+    "node": ">=24.0.0"
+  },
+  "packageManager": "bun@1.4.4"
+}
