@@ -38,19 +38,29 @@
       "default": "./dist/electron.mjs"
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build": "vp pack",
+    "changeset": "changeset",
     "check": "vp check",
     "example:live": "bun examples/live.ts",
     "example:parse": "bun examples/parse.ts",
+    "ready": "vp check && vp run typecheck && vp run test && vp run build",
+    "release": "changeset publish",
     "test": "bun test",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "version": "changeset version && vp install --lockfile-only && vp fmt package.json CHANGELOG.md"
   },
   "dependencies": {
     "ws": "^8.23.0"
   },
   "devDependencies": {
     "@byc/vp-config": "^0.1.0",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
     "@stylistic/eslint-plugin": "^6.0.0",
     "@types/bun": "^1.4.4",
     "@types/ws": "^8.18.1",

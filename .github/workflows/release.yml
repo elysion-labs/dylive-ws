@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.4'
+      - uses: voidzero-dev/setup-vp@v1.22.0
+        with:
+          node-version: '24'
+          run-install: false
+      - name: Install dependencies
+        run: vp install --frozen-lockfile
+      - name: Check, test and build
+        run: vp run ready
+      - name: Ensure npm supports trusted publishing
+        run: npm install --global npm@11
+      - name: Version or publish
+        id: changesets
+        uses: changesets/action@v2
+        with:
+          version-script: vp run version
+          publish-script: vp run release
+          pr-title: 'chore(release): version package'
+          commit-message: 'chore(release): version package'
+          create-github-releases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Include version in release PR title
+        if: steps.changesets.outputs.pr-number
+        shell: bash
+        run: |
+          git fetch origin refs/heads/changeset-release/main
+          package=$(git show FETCH_HEAD:package.json)
+          name=$(jq -r .name <<<"$package")
+          version=$(jq -r .version <<<"$package")
+          gh pr edit "$PR" --title "chore(release): $name@$version"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ steps.changesets.outputs.pr-number }}
