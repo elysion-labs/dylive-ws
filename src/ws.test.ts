@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 
 import { WebSocket, WebSocketServer } from 'ws';
 
-import type { ChatEvent } from './parser';
+import type { LiveEvent } from './parser';
 import { ProtoMessage } from './protobuf';
 import { encodeSignature } from './signature';
 import { bytesField, numberField } from './testing/frames';
@@ -108,13 +108,13 @@ it('receives a captured chat payload and acknowledges the batch on the default W
     heartbeatInterval: 50,
   });
 
-  const chat = Promise.withResolvers<ChatEvent>();
+  const chat = Promise.withResolvers<LiveEvent>();
   client.on('event', chat.resolve);
 
   try {
     await client.start();
     expect(client.getStatus().status).toBe('connected');
-    expect((await chat.promise).content).toBe('最后应该给他冻住');
+    expect(await chat.promise).toMatchObject({ type: 'message', content: '最后应该给他冻住' });
 
     const receipt = new ProtoMessage(await ack.promise, [2, 7, 8]);
     expect(receipt.uint64(2)).toBe('9007199254740993');

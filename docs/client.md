@@ -12,7 +12,10 @@ await using client = createClient({
   cookie: async signal => cookieService.getCookie({ signal }),
 });
 
-client.on('event', event => console.log(event.user.name, event.content));
+client.on('event', event => {
+  if (event.type === 'message') console.log(event.user.name, event.content);
+  if (event.type === 'gift') console.log(event.user.name, event.gift.name, event.comboCount);
+});
 client.on('statusChange', status => console.log(status.status));
 client.on('error', error => console.error(error.message));
 
@@ -37,7 +40,10 @@ const window = new BrowserWindow();
 await window.loadURL('about:blank');
 
 const client = createElectronClient({ webContents: window.webContents });
-client.on('event', event => console.log(event.user.name, event.content));
+client.on('event', event => {
+  if (event.type === 'message') console.log(event.user.name, event.content);
+  if (event.type === 'gift') console.log(event.user.name, event.gift.name, event.comboCount);
+});
 client.on('error', error => console.error(error.message));
 window.on('closed', () => void client.dispose());
 

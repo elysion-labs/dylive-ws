@@ -1,5 +1,5 @@
 import { parseEvent } from './parser';
-import type { ChatEvent, ParseContext, ParseResult } from './parser';
+import type { LiveEvent, ParseContext, ParseResult } from './parser';
 import type { RawMessage } from './protocol';
 
 export type ClientState =
@@ -21,7 +21,7 @@ export interface ClientStatus {
 }
 
 export interface ClientEventMap {
-  event: ChatEvent;
+  event: LiveEvent;
   raw: RawMessage;
   statusChange: ClientStatus;
   error: Error;
