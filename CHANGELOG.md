@@ -1,5 +1,11 @@
 # @elysionjs/dylive-ws
 
+## 0.1.1
+
+### Patch Changes
+
+- [#2](https://github.com/elysion-labs/dylive-ws/pull/2) [`58d3b2d`](https://github.com/elysion-labs/dylive-ws/commit/58d3b2d6ca8dfb73ac7ff2f295ff141d6abb9d9a) Thanks [@YanChenBai](https://github.com/YanChenBai)! - 解析礼物、进入直播间、点赞、关注和粉丝团消息，客户端 `event` 回调改为 `LiveEvent` 联合类型，用户信息附带财富等级与粉丝团灯牌。
+
 ## 0.1.0
 
 ### Minor Changes

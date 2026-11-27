@@ -1,6 +1,6 @@
 {
   "name": "@elysionjs/dylive-ws",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Read-only Douyin live chat decoding and Electron CDP capture.",
   "homepage": "https://github.com/elysion-labs/dylive-ws#readme",
   "bugs": {
