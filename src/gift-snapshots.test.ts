@@ -2,6 +2,7 @@ import { expect, it } from 'bun:test';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
+import { parseEvent } from './parser';
 import { ProtoMessage } from './protobuf';
 import { decodeMessages } from './protocol';
 import { pushFrame } from './testing/frames';
@@ -45,4 +46,30 @@ it.each(capture.fixtures)('replays captured gift $file', ({ file, sha256, expect
     totalCount: gift.uint64(29),
     recipientPresent: gift.dataField(8) !== undefined,
   }).toEqual(expected);
+});
+
+it.each(capture.fixtures)('parses captured gift $file as a gift event', ({ file, expected }) => {
+  const payload = readFileSync(new URL(`./testing/live/electron/gifts/${file}`, import.meta.url));
+  const [raw] = decodeMessages(pushFrame([{ method: capture.method, payload }]));
+
+  expect(parseEvent(raw, { roomId: 'room' })).toMatchObject({
+    status: 'parsed',
+    event: {
+      type: 'gift',
+      gift: {
+        id: expected.giftId,
+        name: expected.name,
+        diamondCount: Number(expected.diamondCount),
+        combo: expected.catalogCombo,
+        fansClub: expected.fansClubGift,
+      },
+      groupId: expected.groupId,
+      groupCount: Number(expected.groupCount),
+      repeatCount: Number(expected.repeatCount),
+      comboCount: Number(expected.comboCount),
+      totalCount: Number(expected.totalCount),
+      repeatEnd: expected.repeatEnd === '1',
+      roomId: 'room',
+    },
+  });
 });

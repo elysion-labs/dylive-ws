@@ -49,7 +49,7 @@ async function main() {
   const client = createElectronClient({ webContents: window.webContents });
 
   client.on('statusChange', state => console.log(state.status));
-  client.on('event', event => console.log(event.roomId, event.user.name, event.content));
+  client.on('event', event => console.log(event.roomId, describe(event)));
   client.on('error', error => console.error(error.message));
   window.once('closed', () => {
     void client.dispose().finally(() => app.quit());
@@ -64,3 +64,33 @@ void main().catch(error => {
   console.error(error instanceof Error ? error.message : 'Electron 示例启动失败');
   app.exit(1);
 });
+
+function describe(event) {
+  switch (event.type) {
+    case 'message': {
+      return `${event.user.name}: ${event.content}`;
+    }
+
+    case 'gift': {
+      return `${event.user.name} 送出 ${event.gift.name ?? event.gift.id} x${event.comboCount}`;
+    }
+
+    case 'member': {
+      return `${event.user.name} 进入直播间`;
+    }
+
+    case 'like': {
+      return `${event.user.name} 点赞 x${event.count}`;
+    }
+
+    case 'follow': {
+      return `${event.user.name} 关注了主播`;
+    }
+
+    case 'fansclub': {
+      return (
+        event.content ?? `${event.user.name} ${event.action === 'join' ? '加入' : '升级'}粉丝团`
+      );
+    }
+  }
+}

@@ -2,6 +2,7 @@
 import { parseArgs } from 'node:util';
 
 import { createClient } from '@elysionjs/dylive-ws';
+import type { LiveEvent } from '@elysionjs/dylive-ws';
 
 import { integer, roomIds, runLiveClients } from '../scripts/live';
 
@@ -29,8 +30,38 @@ if (values.help) {
   client.on('statusChange', state =>
     console.log(state.status, state.resolvedRoomId ?? state.roomId),
   );
-  client.on('event', event => console.log(event.user.name, event.content));
+  client.on('event', event => console.log(describe(event)));
   client.on('error', error => console.error(error.message));
 
   await runLiveClients([client], seconds);
+}
+
+function describe(event: LiveEvent): string {
+  switch (event.type) {
+    case 'message': {
+      return `${event.user.name}: ${event.content}`;
+    }
+
+    case 'gift': {
+      return `${event.user.name} 送出 ${event.gift.name ?? event.gift.id} x${event.comboCount}`;
+    }
+
+    case 'member': {
+      return `${event.user.name} 进入直播间`;
+    }
+
+    case 'like': {
+      return `${event.user.name} 点赞 x${event.count}`;
+    }
+
+    case 'follow': {
+      return `${event.user.name} 关注了主播`;
+    }
+
+    case 'fansclub': {
+      return (
+        event.content ?? `${event.user.name} ${event.action === 'join' ? '加入' : '升级'}粉丝团`
+      );
+    }
+  }
 }

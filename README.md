@@ -39,7 +39,10 @@ import { createClient } from '@elysionjs/dylive-ws';
 
 await using client = createClient({ roomId: '708764876300' });
 
-client.on('event', event => console.log(event.user.name, event.content));
+client.on('event', event => {
+  if (event.type === 'message') console.log(event.user.name, event.content);
+  if (event.type === 'gift') console.log(event.user.name, event.gift.name, event.comboCount);
+});
 client.on('error', error => console.error(error.message));
 
 await client.start();
